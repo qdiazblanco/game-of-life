@@ -22,6 +22,9 @@ def get_model() -> str:
 
     return model 
 
+'''
+improve error handling
+'''
 def get_board_size(default_width : int = 10, default_height : int = 10) -> tuple[int, int]:
     
     width = default_width
@@ -34,7 +37,9 @@ def get_board_size(default_width : int = 10, default_height : int = 10) -> tuple
             
             if not w:
                 print('Default selected.')
-                w = default_width
+                #w = default_width
+            elif int(w) <= 0:
+                raise ValueError
 
             sleep(0.5)
 
@@ -42,7 +47,9 @@ def get_board_size(default_width : int = 10, default_height : int = 10) -> tuple
 
             if not h:
                 print('Default selected.')
-                h = default_height
+                #h = default_height
+            elif int(w) <= 0:
+                raise ValueError
 
             sleep(0.5)
 
@@ -66,13 +73,15 @@ def get_board_size(default_width : int = 10, default_height : int = 10) -> tuple
 
         except ValueError:
             count += 1
-            print('The width/height must be a number')
+            print('The width/height must be a positive number')
     
         
     if count == 3:
         print("\nMaximum number of inputs reached:\nDefault board assigned.")
         sleep(2)
         return default_width, default_height
+
+    
 
     print('\nValid width and height. Starting...')
     sleep(2)

@@ -1,8 +1,7 @@
-from game_of_life.interfaces.basic import terminal_interface 
+from game_of_life.interfaces.choose_interface import choose_int
 
 def main() -> None:
-
-    terminal_interface()
+    choose_int()
 
 if __name__ == "__main__":
 
