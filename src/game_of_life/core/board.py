@@ -16,7 +16,7 @@ def random_state( width : int , height : int ) -> list[list[bool]]:
     return([[random_cell_state() for _ in range(width)] for _ in range(height)])
 
 
-def render(board_state : list[list[bool]]) -> str:
+def render(board_state : list[list[bool]]) -> None:
     width = len(board_state[0])
     height = len(board_state)
 
@@ -38,4 +38,3 @@ def render(board_state : list[list[bool]]) -> str:
     board += '\n' + bottom
 
     print(board)
-    return board

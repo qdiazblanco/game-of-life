@@ -87,24 +87,24 @@ def game_screen(stdscr) -> None:
     if choice == 'r':
 
         width, height = choose_size(stdscr, half_col)
-        width = min(cols, width)
-        height = min(rows, height)
+        render_width = min(cols, width*2 + 3)
+        render_height = min(rows, height + 2)
 
         board_coordy = half_row - height//2
         board_coordx = half_col - width//2
         
         #stdscr.move(max(0, half_row - height//2), max(0, half_col - width//2))
 
-        rand_board = render(random_state(width, height)).splitlines()
+        rand_board = render(random_state(render_width//2 - 1, render_height - 2)).splitlines()
 
         stdscr.clear()
         for i, line in enumerate(rand_board):
             stdscr.addstr(board_coordy+i , board_coordx , line)
-        
+
         stdscr.move(rows-1, cols-1)
   
     stdscr.refresh()
 
     '''
-    tener en cuenta el tamaño del render
+    hacer funcion render especifica para curses
     '''
