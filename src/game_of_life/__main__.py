@@ -1,7 +1,8 @@
-from game_of_life.interfaces.choose_interface import choose_int
+from game_of_life.interfaces import choose_interface
+from game_of_life.interfaces.choose_interface import choose_interface
 
 def main() -> None:
-    choose_int()
+    choose_interface()
 
 if __name__ == "__main__":
 
