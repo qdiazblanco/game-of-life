@@ -1,5 +1,6 @@
 from game_of_life.core.board import random_state
 from game_of_life.core.loop_life import infinite_loop
+from game_of_life.core.get_board_from_file import load_board
 
 from time import sleep
 
@@ -22,6 +23,18 @@ def get_model() -> str:
 
     return model 
 
+
+def check_dimension(dim : str) -> None:
+    if not dim:
+        print('Default selected.')
+        #w = default_width
+    elif int(dim) <= 0:
+        print('The width/height must be a positive number')
+        raise ValueError
+    elif int(dim) > 100:
+        print("Board size too large")
+        raise ValueError
+
 def get_board_size(default_width : int = 10, default_height : int = 10) -> tuple[int, int]:
     
     width = default_width
@@ -32,17 +45,13 @@ def get_board_size(default_width : int = 10, default_height : int = 10) -> tuple
         try:
             w = input(f"Please choose the width of the board (default = {default_width}, press enter): ").strip()
             
-            if not w:
-                print('Default selected.')
-                w = default_width
+            check_dimension(w)
 
             sleep(0.5)
 
             h = input(f"Please choose the height of the board (default = {default_height}, press enter): ").strip()
 
-            if not h:
-                print('Default selected.')
-                h = default_height
+            check_dimension(h)
 
             sleep(0.5)
 
@@ -53,20 +62,10 @@ def get_board_size(default_width : int = 10, default_height : int = 10) -> tuple
             else:
                 width = int(w)
                 height = int(h)
-
-            if width <= 0 or height <= 0:
-                count += 1
-                print("Board dimensions must be positive")
-
-            elif width > 100 or height > 100:
-                count += 1
-                print("Board size too large")
-            else:
                 break
 
         except ValueError:
             count += 1
-            print('The width/height must be a number')
     
         
     if count == 3:
@@ -74,17 +73,51 @@ def get_board_size(default_width : int = 10, default_height : int = 10) -> tuple
         sleep(2)
         return default_width, default_height
 
+    
     print('\nValid width and height. Starting...')
     sleep(2)
     return width, height
 
 
+def choose_game_mode() -> str:
+
+    mode = input("'random' or 'premade' board? ").strip().lower()
+
+    count = 1 
+    while count < 3:
+
+        if mode in ('random', 'premade'):
+            break
+
+        count += 1
+        mode = input("Invalid option. Please choose 'random' or 'premade'(yet to implement): ").strip().lower() 
+    
+    if count == 3:
+        print("\nMaximum number of inputs reached:\nShutting down...")
+        return ''
+
+    return mode
+
+def list_premade_boards() -> None:
+
+    pass
+
+def choose_premade_board() -> list[list[bool]] | None:
+    input("Choose a premade board from the list above please: ")
+    pass
+
 def terminal_interface() -> None:
 
     model = get_model()
+    mode = choose_game_mode()
 
     if model:
-        width, height = get_board_size()
+        if mode == 'random':
+            width, height = get_board_size()
 
-        start = random_state(width, height)
-        infinite_loop(start, model)
+            start = random_state(width, height)
+            infinite_loop(start, model)
+        else:
+            list_premade_boards()
+            start = choose_premade_board()
+            infinite_loop(start, model)
