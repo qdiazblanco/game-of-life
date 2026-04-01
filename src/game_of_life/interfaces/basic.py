@@ -117,7 +117,8 @@ def terminal_interface() -> None:
 
             start = random_state(width, height)
             infinite_loop(start, model)
-        else:
+            
+        elif mode == 'premade':
             list_premade_boards()
             start = choose_premade_board()
             infinite_loop(start, model)
